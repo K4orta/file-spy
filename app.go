@@ -5,7 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 )
 
 func main() {
@@ -24,8 +24,8 @@ func main() {
 			case ev := <-watcher.Event:
 				if ev.IsCreate() || ev.IsModify() {
 					log.Println("Moving a file...")
-					_, filename := path.Split(ev.Name)
-					efv := copyFile(ev.Name, moveDir+"/"+filename)
+					_, filename := filepath.Split(ev.Name)
+					efv := copyFile(ev.Name, filepath.Join(moveDir, filename))
 					if efv != nil {
 						log.Println(efv)
 					}
